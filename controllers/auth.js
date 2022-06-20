@@ -7,8 +7,12 @@ export const register = async (req, res, next) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
     const newUser = new User({
-      username: req.body.username,
-      email: req.body.email,
+      //user is increase so all required are need
+      // username: req.body.username,
+      // email: req.body.email,
+      // password: hash,
+
+      ...req.body,
       password: hash,
     });
 
@@ -36,6 +40,8 @@ export const login = async (req, res, next) => {
       { id: user._id, isAdmin: user.isAdmin },
       process.env.JWT
     );
+    req.token = token;
+    req.user = user;
     //for hide password and admin status
     const { password, isAdmin, ...otherDetails } = user._doc;
     res
@@ -44,6 +50,16 @@ export const login = async (req, res, next) => {
       })
       .status(200)
       .send({ details: { ...otherDetails }, isAdmin });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const logout = async (req, res, next) => {
+  try {
+    res.clearCookie("access_token");
+    // res.localStorage.clear("user");
+    res.status(200).send("Logout Successful");
   } catch (err) {
     next(err);
   }
