@@ -32,7 +32,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomsRoute);
 app.use("/api/users", usersRoute);
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Server is running");
 });
 app.use((err, req, res, next) => {
