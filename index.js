@@ -9,7 +9,7 @@ import roomsRoute from "./routes/rooms.js";
 import usersRoute from "./routes/users.js";
 const app = express();
 dotenv.config();
-const PORT = process.env.PORT || 8800;
+const port = process.env.PORT || 8800;
 const connect = async () => {
   try {
     await mongoose.connect(process.env.MONGO);
@@ -32,7 +32,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomsRoute);
 app.use("/api/users", usersRoute);
-app.get("/", (req, res) => {
+app.use("/", (req, res) => {
   res.send("Server is running");
 });
 app.use((err, req, res, next) => {
@@ -46,7 +46,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
+app.listen(port, () => {
   connect();
   console.log("Connected to backend!");
 });
