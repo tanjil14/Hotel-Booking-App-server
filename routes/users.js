@@ -5,7 +5,6 @@ import {
   getUsers,
   updateUser,
 } from "../controllers/user.js";
-import { verifyAdmin, verifyUser } from "../utils/verifyToken.js";
 const router = express.Router();
 
 //=================== for check ===========
@@ -19,13 +18,21 @@ const router = express.Router();
 //   res.send("Hello admin, you are logged in and you can delete all accounts");
 // });
 
+// //UPDATE
+// router.put("/:id", verifyUser, updateUser);
+// //DELETE
+// router.delete("/:id", verifyUser, deleteUser);
+// //GET
+// router.get("/:id", verifyUser, getUser);
+// //GET All
+// router.get("/", verifyAdmin, getUsers);
 //UPDATE
-router.put("/:id", verifyUser, updateUser);
+router.put("/:id", updateUser);
 //DELETE
-router.delete("/:id", verifyUser, deleteUser);
+router.delete("/:id", deleteUser);
 //GET
-router.get("/:id", verifyUser, getUser);
+router.get("/:id", getUser);
 //GET All
-router.get("/", verifyAdmin, getUsers);
+router.get("/", getUsers);
 
 export default router;
